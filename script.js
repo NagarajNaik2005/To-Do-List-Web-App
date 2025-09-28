@@ -8,30 +8,38 @@ window.onload = () => {
   savedTasks.forEach(task => createTask(task.text, task.completed));
 };
 
-// Function to save tasks to localStorage
+// Save tasks to localStorage
 function saveTasks() {
   const tasks = [];
   document.querySelectorAll("#taskList li").forEach(li => {
     tasks.push({
-      text: li.firstChild.textContent,
+      text: li.querySelector(".task-text").textContent,
       completed: li.classList.contains("completed")
     });
   });
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// Function to create a new task
+// Create a task with checkbox
 function createTask(taskText, isCompleted = false) {
   const li = document.createElement('li');
-  li.textContent = taskText;
 
-  if (isCompleted) {
-    li.classList.add("completed");
-  }
+  // Checkbox
+  const checkbox = document.createElement('input');
+  checkbox.type = "checkbox";
+  checkbox.checked = isCompleted;
 
-  // Toggle complete on click
-  li.addEventListener('click', () => {
-    li.classList.toggle('completed');
+  // Task text
+  const span = document.createElement('span');
+  span.textContent = taskText;
+  span.classList.add("task-text");
+
+  // Apply completed style if already done
+  if (isCompleted) li.classList.add("completed");
+
+  // Toggle complete when checkbox changes
+  checkbox.addEventListener('change', () => {
+    li.classList.toggle("completed", checkbox.checked);
     saveTasks();
   });
 
@@ -39,24 +47,25 @@ function createTask(taskText, isCompleted = false) {
   const removeBtn = document.createElement('button');
   removeBtn.textContent = "X";
   removeBtn.classList.add('remove-btn');
-  removeBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // prevent toggle
+  removeBtn.addEventListener('click', () => {
     taskList.removeChild(li);
     saveTasks();
   });
 
+  li.appendChild(checkbox);
+  li.appendChild(span);
   li.appendChild(removeBtn);
   taskList.appendChild(li);
+
   saveTasks();
 }
 
-// Function to handle add button
+// Add task handler
 function addTask() {
   const taskText = taskInput.value.trim();
-  if (taskText === "") return; // ignore empty input
-
+  if (taskText === "") return;
   createTask(taskText);
-  taskInput.value = ""; // clear input
+  taskInput.value = "";
 }
 
 // Event listeners
