@@ -1,18 +1,23 @@
+/* General Styles */
 body {
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
+  font-family: 'Times New Roman', Times, serif;
+  background: #f4f4f9;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px;
+  min-height: 100vh;
 }
 
 .todo-container {
-  background: #fff;
+  background: white;
+  margin-top: 50px;
   padding: 20px;
-  width: 350px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 400px;
 }
 
 h2 {
@@ -26,24 +31,24 @@ h2 {
   margin-bottom: 20px;
 }
 
-input[type="text"] {
+#taskInput {
   flex: 1;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-button {
-  padding: 8px 12px;
-  background: #4CAF50;
-  border: none;
+#addBtn {
+  padding: 10px 15px;
+  background: #00ff55;
   color: white;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #45a049;
+#addBtn:hover {
+  background: #118a35;
 }
 
 ul {
@@ -55,28 +60,46 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fafafa;
-  padding: 8px;
-  margin-bottom: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Custom checkbox */
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
   border-radius: 4px;
-  border: 1px solid #ddd;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  background: white;
+  margin-right: 10px;
 }
 
-.task-text {
-  flex: 1;
-  margin: 0 10px;
+/* Green ✔ checkmark */
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: green;
+  font-size: 14px;
+  position: absolute;
+  top: -2px;
+  left: 2px;
 }
 
-.completed .task-text {
+/* Completed task text */
+.completed {
   text-decoration: line-through;
   color: gray;
 }
 
 .remove-btn {
   background: red;
-  border: none;
   color: white;
-  padding: 5px 8px;
+  border: none;
+  padding: 4px 8px;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -85,25 +108,36 @@ li {
   background: darkred;
 }
 
-/* Responsive Design */
-@media (max-width: 480px) {
-  body {
-    padding: 20px;
-  }
-
+/* Responsive */
+@media (max-width: 500px) {
   .todo-container {
     width: 100%;
-    padding: 15px;
+    margin: 20px;
   }
-
-  .input-section {
-    flex-direction: column;
+  #addBtn{
+    width: 100;
   }
-
-  .addbutton {
-    width: 100%;
+  .remove-btn{
+    width: 100;
   }
- .removeBtn{
-   width: 100%;
- }
 }
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
