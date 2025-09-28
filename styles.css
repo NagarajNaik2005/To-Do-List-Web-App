@@ -100,7 +100,10 @@ li {
     flex-direction: column;
   }
 
-  button {
+  .addbutton {
     width: 100%;
   }
+ .removeBtn{
+   width: 100%;
+ }
 }
